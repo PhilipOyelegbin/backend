@@ -14,8 +14,7 @@ To install and set up the Task CLI Application, follow these steps:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/philipoyelegbin/backend.git
-   cd task-cli
+   git clone https://github.com/PhilipOyelegbin/backend/tree/master/task-cli.git
    ```
 
 2. **Install dependencies**:
