@@ -1,0 +1,26 @@
+{
+  "name": "github-activity",
+  "version": "1.0.0",
+  "description": "A simple command line interface (CLI) to fetch the recent activity of a GitHub user and display it in the terminal",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PhilipOyelegbin/backend.git#master"
+  },
+  "keywords": [
+    "Github",
+    "activity"
+  ],
+  "author": "Philip Oyelegbin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PhilipOyelegbin/backend/issues"
+  },
+  "homepage": "https://github.com/PhilipOyelegbin/backend/tree/master#readme",
+  "dependencies": {
+    "@inquirer/prompts": "^5.3.8"
+  }
+}
