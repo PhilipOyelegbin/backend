@@ -5,6 +5,7 @@ This is collation of all my backend projects from roadmap.sh.
 
 ## Features
 - **Task CLI**: Task CLI Application is a command-line tool built with Node.js.
+- **GitHub Activity CLI**: The GitHub Activity CLI Application is a command-line tool to fetch the recent activity of a GitHub user and display it in the terminal.
 
 ## Installation
 To install and set up the an application in the project, follow these steps:

@@ -5,7 +5,7 @@ The GitHub Activity CLI Application is a command-line tool to fetch the recent a
 
 ## Features
 - **Fetch all github activitity**: Easily get all github activity of a user with a username.
-- **Filter github activity by type**: Filter the github activity of a user with a user name and type.
+- **Filter github activity by type**: Filter the github activity of a user with a username and type.
 
 ## Installation
 To install and set up the GitHub Activity Application, follow these steps:
