@@ -1,0 +1,27 @@
+{
+  "name": "expense-tracker-cli",
+  "version": "1.0.0",
+  "description": "A simple expense tracker application to manage your finances. The application should allow users to add, delete, and view their expenses. The application should also provide a summary of the expenses.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PhilipOyelegbin/backend.git#master"
+  },
+  "keywords": [
+    "Expense",
+    "Tracker",
+    "CLI"
+  ],
+  "author": "Philip Oyelegbin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PhilipOyelegbin/backend/issues"
+  },
+  "homepage": "https://github.com/PhilipOyelegbin/backend/tree/master#readme",
+  "dependencies": {
+    "@inquirer/prompts": "^5.5.0"
+  }
+}
