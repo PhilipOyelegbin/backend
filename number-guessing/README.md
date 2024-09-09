@@ -1,7 +1,7 @@
-# Expense Tracker CLI Application
+# Number Guessing CLI Game
 
 ## Overview
-A simple expense tracker application to manage your finances. The application should allow users to add, update, filter, delete, and view their expenses. The application should also provide a summary of the expenses.
+A simple number guessing game where the computer randomly selects a number and the user has to guess it. The user will be given a limited number of chances to guess the number. If the user guesses the number correctly, the game will end, and the user will win. Otherwise, the game will continue until the user runs out of chances.
 
 ## Features
 - **Add expenses**: Store expenses to the database.
@@ -13,11 +13,11 @@ A simple expense tracker application to manage your finances. The application sh
 - **Delete expenses**: Delete an expense from the database.
 
 ## Installation
-To install and set up the Expense Tracker Application, follow these steps:
+To install and set up the Number Guessing Game, follow these steps:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/PhilipOyelegbin/backend/tree/master/expense-tracker-cli.git
+   git clone https://github.com/PhilipOyelegbin/backend/tree/master/number-guessing.git
    ```
 
 2. **Install dependencies**:
@@ -26,7 +26,7 @@ To install and set up the Expense Tracker Application, follow these steps:
    ```
 
 ## Usage
-After installation, you can use the following commands to manage your expense tracker:
+After installation, you can use the following commands to manage your number guessing game:
 
 - **Add an expense to the database**:
   ```javascript
@@ -92,7 +92,7 @@ After installation, you can use the following commands to manage your expense tr
   ```
 
 ## Example
-Here's an example of how to use the Expense Tracker CLI Application:
+Here's an example of how to use the Number Guessing CLI Game:
 
 ```bash
 # Add an expense

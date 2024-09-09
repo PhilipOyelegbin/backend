@@ -6,6 +6,8 @@ This is collation of all my backend projects from roadmap.sh.
 ## Features
 - **Task CLI**: Task CLI Application is a command-line tool built with Node.js (https://roadmap.sh/projects/task-tracker).
 - **GitHub Activity CLI**: The GitHub Activity CLI Application is a command-line tool to fetch the recent activity of a GitHub user and display it in the terminal (https://roadmap.sh/projects/github-user-activity).
+- **Expense Tracker CLI**: The Expense Tracker CLI Application is a command-line tool to manage your finances. The application should allow users to add, delete, update, filter and view their expenses. The application should also provide a summary of the expenses (https://roadmap.sh/projects/expense-tracker-cli).
+- **Number Guessing CLI**: The Number Guessing CLI game is a command-line game.  (https://roadmap.sh/projects/number-guessing).
 
 ## Installation
 To install and set up the an application in the project, follow these steps:
