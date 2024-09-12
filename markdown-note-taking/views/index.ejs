@@ -27,8 +27,9 @@
         listItem.innerHTML = `
           <strong>${note.filename}</strong>
           <button onclick="fetchNote('${note.id}')">View</button>
-          <button onclick="checkGrammar('${note.id}')">Check Grammar</button>
-          <button onclick="renderNote('${note.id}')">Render HTML</button>
+          <button id="grammer-btn" onclick="checkGrammar('${note.id}')">Check Grammar</button>
+          <button id="render-btn" onclick="renderNote('${note.id}')">Render HTML</button>
+          <button id="delete-btn" onclick="deleteNote('${note.id}')">Delete</button>
         `;
         notesList.appendChild(listItem);
       });
@@ -51,6 +52,18 @@
       const htmlContent = await response.text();
       const newWindow = window.open();
       newWindow.document.write(htmlContent);
+    }
+
+    async function deleteNote(id) {
+      const response = await fetch(`/api/notes/${id}`, {
+        method: 'DELETE'
+      });
+      if (response.ok) {
+        alert('Note deleted successfully');
+        fetchNotes();
+      } else {
+        alert('Failed to delete note');
+      }
     }
 
     fetchNotes();

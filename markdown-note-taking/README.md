@@ -5,8 +5,9 @@ A simple note-taking app that lets users upload markdown files, check the gramma
 
 ## Features
 - Created an endpoint to check the grammar of the note.
-- Created an endpoint to save the note that can be passed in as Markdown text.
-- Created an endpoint to list the saved notes (i.e. uploaded markdown files).
+- Created an endpoint to save the uploaded file into the upload folder
+- Created an endpoint to view the database content for a file upload
+- Created an endpoint to list all the saved notes (i.e. uploaded markdown files).
 - Return the HTML version of the Markdown note (rendered note) through another endpoint.
 
 ## Installation
@@ -25,94 +26,25 @@ To install and set up the Markdown Note-taking App, follow these steps:
 ## Usage
 After installation, you can use the following commands to manage your Markdown Note-taking App:
 
-- **Add an expense to the database**:
+- **Start the application**:
   ```javascript
-  node index.js add
+  node index.js
   ```
     or
-  ```bash
-  ./index.js add
-  ```
-
-- **View all expenses from the database**:
   ```javascript
-  node index.js list
-  ```
-    or
-  ```bash
-  ./index.js list
-  ```
-
-- **Filter expenses from the database by a given filter and value**:
-  ```javascript
-  node index.js filterList
-  ```
-    or
-  ```bash
-  ./index.js filterList
-  ```
-
-- **Sum all the expenses**:
-  ```javascript
-  node index.js summarize
-  ```
-    or
-  ```bash
-  ./index.js sum
-  ```
-
-- **Sum expenses by month**:
-  ```javascript
-  node index.js summarizeByMonth
-  ```
-    or
-  ```bash
-  ./index.js summarizeByMonth
-  ```
-
-- **Update expenses in the database by a given filter and value**:
-  ```javascript
-  node index.js update
-  ```
-    or
-  ```bash
-  ./index.js update
-  ```
-
-- **Delete an expense from the database**:
-  ```javascript
-  node index.js remove
-  ```
-    or
-  ```bash
-  ./index.js reomve
+  npm start
   ```
 
 ## Example
 Here's an example of how to use the Markdown Note-taking App:
 
 ```bash
-# Add an expense
-./index.js add
+# start the application
+npm start
 
-# List all expense 
-./index.js list
-
-# Filter expenses from the database by a given filter and value
-./index.js filterList
-
-# Sum all the expenses
-./index.js summarize
-
-# Sum expenses by month
-./index.js summarizeByMonth
-
-# Update expenses in the database by a given filter and value
-./index.js update
-
-# Remove an expense from the database
-./index.js reomve
+# access the web interface sing the port number in your terminal (e.g, http://localhost:3001)
 ```
+![preview](./public/image/preview.png)
 
 ## Contributing
 Contributions are welcome! If you have any ideas, suggestions, or bug reports, please open an issue or submit a pull request.
