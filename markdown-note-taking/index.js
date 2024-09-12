@@ -5,6 +5,9 @@ import path from "path";
 import { fileURLToPath } from "url";
 import languageTool from "languagetool-api";
 import showdown from "showdown";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 // Get the directory name
 const __filename = fileURLToPath(import.meta.url);
@@ -191,6 +194,8 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.listen(3001, () => {
-  console.log("Server listening on port 3001");
+const PORT = process.env.PORT;
+
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
 });
