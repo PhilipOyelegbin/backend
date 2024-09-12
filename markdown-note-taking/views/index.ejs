@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown Note App</title>
+  <link rel="stylesheet" type="text/css" href="/public/css/styles.css">
+</head>
+<body>
+  <h1>Markdown Note App</h1>
+  <form action="/api/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".md" required>
+    <button type="submit">Upload Note</button>
+  </form>
+
+  <h2>Notes</h2>
+  <ul id="notes-list"></ul>
+
+  <script>
+    async function fetchNotes() {
+      const response = await fetch('/api/notes');
+      const data = await response.json();
+      const notesList = document.getElementById('notes-list');
+      notesList.innerHTML = '';
+      data.notes.forEach(note => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+          <strong>${note.filename}</strong>
+          <button onclick="fetchNote('${note.id}')">View</button>
+          <button onclick="checkGrammar('${note.id}')">Check Grammar</button>
+          <button onclick="renderNote('${note.id}')">Render HTML</button>
+        `;
+        notesList.appendChild(listItem);
+      });
+    }
+
+    async function fetchNote(id) {
+      const response = await fetch(`/api/notes/${id}`);
+      const data = await response.json();
+      alert(JSON.stringify(data.note, null, 2));
+    }
+
+    async function checkGrammar(id) {
+      const response = await fetch(`/api/check-grammar/${id}`);
+      const correctedText = await response.text();
+      alert(correctedText);
+    }
+
+    async function renderNote(id) {
+      const response = await fetch(`/api/render-note/${id}`);
+      const htmlContent = await response.text();
+      const newWindow = window.open();
+      newWindow.document.write(htmlContent);
+    }
+
+    fetchNotes();
+  </script>
+</body>
+</html>

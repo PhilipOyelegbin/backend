@@ -1,23 +1,20 @@
-# Number Guessing CLI Game
+# Markdown Note-taking App
 
 ## Overview
-A simple number guessing game where the computer randomly selects a number and the user has to guess it. The user will be given a limited number of chances to guess the number. If the user guesses the number correctly, the game will end, and the user will win. Otherwise, the game will continue until the user runs out of chances.
+A simple note-taking app that lets users upload markdown files, check the grammar, save the note, and render it in HTML. The goal of this project is to help you learn how to handle file uploads in a RESTful API, parse and render markdown files using libraries, and check the grammar of the notes.
 
 ## Features
-- **Add expenses**: Store expenses to the database.
-- **View expenses**: Fetch all expenses from the database.
-- **Filter expenses**: Filter expenses from the database by a given filter and value.
-- **Sum all expenses**: Add all the prices of expenses together.
-- **Sum expenses by month**: Add expenses together based on provided month.
-- **Update an expense**: Update an expense in the database.
-- **Delete expenses**: Delete an expense from the database.
+- Created an endpoint to check the grammar of the note.
+- Created an endpoint to save the note that can be passed in as Markdown text.
+- Created an endpoint to list the saved notes (i.e. uploaded markdown files).
+- Return the HTML version of the Markdown note (rendered note) through another endpoint.
 
 ## Installation
-To install and set up the Number Guessing Game, follow these steps:
+To install and set up the Markdown Note-taking App, follow these steps:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/PhilipOyelegbin/backend/tree/master/number-guessing.git
+   git clone https://github.com/PhilipOyelegbin/backend/tree/master/markdown-note-taking.git
    ```
 
 2. **Install dependencies**:
@@ -26,7 +23,7 @@ To install and set up the Number Guessing Game, follow these steps:
    ```
 
 ## Usage
-After installation, you can use the following commands to manage your number guessing game:
+After installation, you can use the following commands to manage your Markdown Note-taking App:
 
 - **Add an expense to the database**:
   ```javascript
@@ -92,7 +89,7 @@ After installation, you can use the following commands to manage your number gue
   ```
 
 ## Example
-Here's an example of how to use the Number Guessing CLI Game:
+Here's an example of how to use the Markdown Note-taking App:
 
 ```bash
 # Add an expense

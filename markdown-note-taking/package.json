@@ -1,0 +1,32 @@
+{
+  "name": "markdown-note-taking",
+  "version": "1.0.0",
+  "description": "A simple note-taking app that lets users upload markdown files, check the grammar, save the note, and render it in HTML. The goal of this project is to help you learn how to handle file uploads in a RESTful API, parse and render markdown files using libraries, and check the grammar of the notes.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PhilipOyelegbin/backend.git#master"
+  },
+  "keywords": [
+    "Markdown",
+    "Note-taking",
+    "App"
+  ],
+  "author": "Philip Oyelegbin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PhilipOyelegbin/backend/issues"
+  },
+  "homepage": "https://github.com/PhilipOyelegbin/backend/tree/master#readme",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.0.0",
+    "languagetool-api": "^1.1.2",
+    "multer": "^1.4.5-lts.1",
+    "showdown": "^2.1.0"
+  }
+}
