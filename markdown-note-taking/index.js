@@ -3,7 +3,6 @@ import multer from "multer";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import languageTool from "languagetool-api";
 import showdown from "showdown";
 import dotenv from "dotenv";
 
@@ -150,25 +149,26 @@ app.get("/api/check-grammar/:id", async (req, res) => {
     const fileContent = fs.readFileSync(filePath, "utf-8");
 
     // Check grammar using LanguageTool API
-    var params = {
-      language: "en-US", // This is required! You can get list of language codes with languagetool.codes
-      text: fileContent, // This is required too!
-    };
-    languageTool.check(params, (err, result) => {
-      if (err) {
-        return res.status(500).render("error", {
-          message: "Error checking grammer",
-          error: err,
-        });
-      } else {
-        const correctedText = result.matches.reduce((text, match) => {
-          return text.replace(match.context.text, match.replacements[0].value);
-        }, fileContent);
+    const params = new URLSearchParams();
+    params.append("language", "en-US");
+    params.append("text", fileContent);
 
-        fs.writeFileSync(filePath, correctedText, "utf-8");
-        return res.status(200).send(correctedText);
-      }
+    const response = await fetch("https://api.languagetool.org/v2/check", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: params.toString(),
     });
+
+    const data = await response.json();
+
+    const correctedText = data.matches.reduce((text, match) => {
+      return text.replace(match.context.text, match.replacements[0].value);
+    }, fileContent);
+
+    fs.writeFileSync(filePath, correctedText, "utf-8");
+    return res.status(200).send(correctedText);
   } catch (error) {
     return res.status(500).render("error", {
       message: "Error processing file",

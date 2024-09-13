@@ -44,7 +44,8 @@
     async function checkGrammar(id) {
       const response = await fetch(`/api/check-grammar/${id}`);
       const correctedText = await response.text();
-      alert(correctedText);
+       const newWindow = window.open();
+       newWindow.document.write(correctedText);
     }
 
     async function renderNote(id) {
