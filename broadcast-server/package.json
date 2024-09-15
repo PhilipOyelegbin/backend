@@ -1,0 +1,27 @@
+{
+  "name": "broadcast-server",
+  "version": "1.0.0",
+  "description": "A simple broadcast server that will allow clients to connect to it, send messages that will be broadcasted to all connected clients.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PhilipOyelegbin/backend.git#master"
+  },
+  "keywords": [
+    "Broadcast",
+    "Server"
+  ],
+  "author": "Philip Oyelegbin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PhilipOyelegbin/backend/issues"
+  },
+  "homepage": "https://github.com/PhilipOyelegbin/backend/tree/master#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}

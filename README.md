@@ -8,6 +8,8 @@ This is collation of all my backend projects from roadmap.sh.
 - **GitHub Activity CLI**: The GitHub Activity CLI Application is a command-line tool to fetch the recent activity of a GitHub user and display it in the terminal (https://roadmap.sh/projects/github-user-activity).
 - **Expense Tracker CLI**: The Expense Tracker CLI Application is a command-line tool to manage your finances. The application should allow users to add, delete, update, filter and view their expenses. The application should also provide a summary of the expenses (https://roadmap.sh/projects/expense-tracker-cli).
 - **Markdown Note-taking App**: The Markdown Note-taking App is an app that lets users upload markdown files, check the grammar, save the note, and render it in HTML (https://roadmap.sh/projects/markdown-note-taking-app).
+- **Broadcast Server CLI**: The Broadcast Server CLI is a simple broadcast server that will allow clients to connect to it, send messages that will be broadcasted to all connected clients (https://roadmap.sh/projects/broadcast-server).
+- **E-Commerce API**: The E-Commerce API is a simple e-commerce platform with cart and payment gateway integration (https://roadmap.sh/projects/ecommerce-api).
 
 ## Installation
 To install and set up the an application in the project, follow these steps:
