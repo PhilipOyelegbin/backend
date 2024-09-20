@@ -1,0 +1,274 @@
+/* styles.css */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-sizing: border-box;
+  background-color: #f4f4f9;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 0;
+}
+
+header h1 {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+nav ul li {
+  display: inline;
+  margin: 0 10px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.hero {
+  text-align: center;
+  padding: 50px 0;
+  background-color: #007bff;
+  color: #fff;
+  height: 50vh;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero h2 {
+  margin: 0 0 10px;
+}
+
+.hero p {
+  margin: 0 0 20px;
+}
+
+.hero .btn {
+  background-color: #fff;
+  color: #007bff;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.hero .btn:hover {
+  background-color: #0056b3;
+  color: #fff;
+}
+
+.products {
+  padding: 20px 0;
+}
+
+.products h2 {
+  text-align: center;
+  margin: 0 0 20px;
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.product-list > div {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  width: 25%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.product-list > div > img {
+  max-width: 100%;
+  height: auto;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.product-list > div > h3 {
+  margin: 0 0 10px;
+}
+
+.product-list > div > p {
+  text-align: left;
+  margin: 0 0 10px;
+}
+
+.product-list > div > .info, .product-tail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-list > div > .info > .price {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.product-list > div > .info > .stock {
+  font-weight: bold;
+  color: #00eeff;
+}
+
+.product-list > div > .btn, .product-tail > .btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.product-list > div > .btn:hover,  .product-tail > .btn {
+  background-color: #0056b3;
+}
+
+.cart-btn {
+  cursor: pointer;
+  background-color: #95ff00;
+  color: #444;
+  padding: 10px 10px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.cart-btn:hover {
+  background-color: #95ff00d3;
+  color: #444;
+  padding: 10px 10px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+/* ------------- error and feedback ------------------ */
+.error-container, .feedback-container, .success-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.error-container h1 {
+  color: #e74c3c;
+  margin-bottom: 10px;
+}
+
+.feedback-container h1, .success-container h1 {
+  color: #218838;
+  margin-bottom: 10px;
+}
+
+.error-container p, .feedback-container p, .success-container p {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.error-container a, .feedback-container a, .success-container a {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.error-container a:hover, .feedback-container a:hover, .success-container a:hover {
+  background-color: #0056b3;
+}
+
+/* ----------------------login -------------------- */
+.login-container, .register-container {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container h1, .register-container h1 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  color: #e74c3c;
+  margin-bottom: 15px;
+}
+
+
+/* --------------- footer ----------------------- */
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+  bottom: 0;
+}

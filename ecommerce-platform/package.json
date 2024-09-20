@@ -1,0 +1,36 @@
+{
+  "name": "ecommerce-platform",
+  "version": "1.0.0",
+  "description": "A simple e-commerce platform with cart and payment gateway integration.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PhilipOyelegbin/backend.git#master"
+  },
+  "keywords": [
+    "Ecommerce",
+    "API"
+  ],
+  "author": "Philip Oyelegbin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PhilipOyelegbin/backend/issues"
+  },
+  "homepage": "https://github.com/PhilipOyelegbin/backend/tree/master#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.11.3",
+    "sequelize": "^6.37.3",
+    "stripe": "^16.12.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
