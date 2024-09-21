@@ -1,8 +1,7 @@
-const process = require("node:process")
+require("dotenv").config()
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
-process.loadEnvFile('.env');
 
 const options = {
   definition: {
