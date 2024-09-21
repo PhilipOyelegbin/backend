@@ -34,7 +34,7 @@ const {
   updateCartById,
   deleteCartById,
 } = require("./controller/cart.controller");
-const { authenticated, authorized, decodeToken } = require("./middleware");
+const { authenticated, authorized } = require("./handler");
 
 process.loadEnvFile('.env');
 
