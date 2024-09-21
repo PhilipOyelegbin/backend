@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
-const dotenv = require("dotenv");
+const process = require("node:process")
 
-dotenv.config();
+process.loadEnvFile('.env');
 
 const sequelize = new Sequelize(
   process.env.DATABASE_NAME,

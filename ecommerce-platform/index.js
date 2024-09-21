@@ -1,4 +1,4 @@
-require("dotenv").config();
+const process = require("node:process")
 const express = require("express");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const { swaggerUi, specs } = require("./swagger");
@@ -35,6 +35,8 @@ const {
   deleteCartById,
 } = require("./controller/cart.controller");
 const { authenticated, authorized, decodeToken } = require("./middleware");
+
+process.loadEnvFile('.env');
 
 const app = express();
 app.set("view engine", "ejs");
