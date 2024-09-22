@@ -1,11 +1,13 @@
-import {
+const { Router } = require("express")
+const {
   createCart,
   getAllCarts,
   getCartById,
   updateCartById,
-} from "../controller/cart.controller";
+} = require("../controller/cart.controller");
+const { authenticated } = require("../handler");
 
-const { authenticated } = require("../middleware");
+const router = Router()
 
 /**
  * @swagger
@@ -32,6 +34,19 @@ const { authenticated } = require("../middleware");
  *                     type: integer
  *                   productId:
  *                     type: integer
+ */
+router.get("/", authenticated, async (req, res) => {
+  try {
+    const carts = await getAllCarts();
+    res.status(200).json({ message: "All carts received successfully", carts });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * @swagger
+ * /api/carts:
  *   post:
  *     summary: Create a new cart
  *     security:
@@ -85,7 +100,20 @@ const { authenticated } = require("../middleware");
  *         description: Unauthorized
  *       500:
  *         description: Internal server error
- * /api/carts/{id}:
+ */
+router.post("/", authenticated, async (req, res) => {
+  const data = req.body;
+  try {
+    const cart = await createCart(data);
+    res.status(201).json({ message: "Cart created successfully", cart });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * @swagger
+ * /{id}:
  *   get:
  *     summary: Retrieve a cart
  *     tags:
@@ -111,6 +139,23 @@ const { authenticated } = require("../middleware");
  *                     type: integer
  *                   productId:
  *                     type: integer
+ */
+router.get("/:id", authenticated, async (req, res) => {
+  const id = req.params.id;
+  if (!id) {
+    return res.status(400).json({ error: "ID is required" });
+  }
+  try {
+    const cart = await getCartById(id);
+    res.status(200).json({ message: "Carts viewd successfully", cart });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * @swagger
+ * /{id}:
  *   patch:
  *     summary: Update a cart data
  *     security:
@@ -121,7 +166,7 @@ const { authenticated } = require("../middleware");
  *       - in : path
  *         name: id
  *     requestBody:
- *       required: true
+ *       required: false
  *       content:
  *         application/json:
  *           schema:
@@ -167,6 +212,24 @@ const { authenticated } = require("../middleware");
  *         description: Unauthorized
  *       500:
  *         description: Internal server error
+ */
+router.patch("/:id", async (req, res) => {
+  const id = req.params.id;
+  if (!id) {
+    return res.status(400).json({ error: "ID is required" });
+  }
+  const data = req.body;
+  try {
+    const cart = await updateCartById(id, data);
+    res.status(201).json({ message: "Carts updated successfully", cart });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * @swagger
+ * /{id}:
  *   delete:
  *     summary: Delete a cart
  *     security:
@@ -213,55 +276,7 @@ const { authenticated } = require("../middleware");
  *       500:
  *         description: Internal server error
  */
-
-// endpoint for carts
-app.get("/api/carts", authenticated, async (req, res) => {
-  try {
-    const carts = await getAllCarts();
-    res.status(200).json({ message: "All carts received successfully", carts });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-app.post("/api/carts", authenticated, async (req, res) => {
-  const data = req.body;
-  try {
-    const cart = await createCart(data);
-    res.status(201).json({ message: "Cart created successfully", cart });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-app.get("/api/carts/:id", authenticated, async (req, res) => {
-  const id = req.params.id;
-  if (!id) {
-    return res.status(400).json({ error: "ID is required" });
-  }
-  try {
-    const cart = await getCartById(id);
-    res.status(200).json({ message: "Carts viewd successfully", cart });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-app.patch("/api/carts/:id", async (req, res) => {
-  const id = req.params.id;
-  if (!id) {
-    return res.status(400).json({ error: "ID is required" });
-  }
-  const data = req.body;
-  try {
-    const cart = await updateCartById(id, data);
-    res.status(201).json({ message: "Carts updated successfully", cart });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-app.delete("/api/carts/:id", authenticated, async (req, res) => {
+router.delete("/:id", authenticated, async (req, res) => {
   const id = req.params.id;
   if (!id) {
     return res.status(400).json({ error: "ID is required" });
@@ -273,3 +288,5 @@ app.delete("/api/carts/:id", authenticated, async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+module.exports = router

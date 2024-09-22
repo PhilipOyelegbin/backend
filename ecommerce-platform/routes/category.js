@@ -1,5 +1,8 @@
+const { Router } = require("express");
 const { getAllCategory, createCategory, getCategoryById, updateCategoryById, deleteCategoryById } = require("../controller/category.controller");
-const { authenticated, authorized } = require("../middleware");
+const { authenticated, authorized } = require("../handler");
+
+const router = Router()
 
 /**
  * @swagger
@@ -24,6 +27,21 @@ const { authenticated, authorized } = require("../middleware");
  *                     type: string
  *                   description:
  *                     type: string
+ */
+router.get("/", authenticated, async (req, res) => {
+  try {
+    const categories = await getAllCategory();
+    res
+      .status(200)
+      .json({ message: "All categories received successfully", categories });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * @swagger
+ * /api/categories:
  *   post:
  *     summary: Create a new category
  *     security:
@@ -72,6 +90,34 @@ const { authenticated, authorized } = require("../middleware");
  *         description: Unauthorized
  *       500:
  *         description: Internal server error
+ */
+router.post(
+  "/",
+  authenticated,
+  authorized("Admin"),
+  async (req, res) => {
+    const { name, description } = req.body;
+
+    // Check if all fields are filled
+    if (!name || !description) {
+      return res.status(400).json({ error: "Please fill in all fields" });
+    }
+
+    // create the category
+    try {
+      const category = await createCategory({
+        name,
+        description,
+      });
+      res.status(201).json({ message: "Category created successfully", category });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  }
+);
+
+/**
+ * @swagger
  * /api/categories/{id}:
  *   get:
  *     summary: Retrieve a category
@@ -96,6 +142,31 @@ const { authenticated, authorized } = require("../middleware");
  *                     type: string
  *                   description:
  *                     type: string
+ */
+router.get("/:id", authenticated, async (req, res) => {
+  const id = req.params.id;
+
+  // Check if id was provided
+  if (!id) {
+    return res.status(400).json({ error: "ID is required" });
+  }
+  try {
+    const category = await getCategoryById(id);
+    if (!category) {
+      res.status(404).json({ error: "Category not found" });
+    } else {
+      res
+        .status(200)
+        .json({ message: "Category gotten successfully", category });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * @swagger
+ * /api/categories/{id}:
  *   patch:
  *     summary: Update a category data
  *     security:
@@ -106,7 +177,7 @@ const { authenticated, authorized } = require("../middleware");
  *       - in : path
  *         name: id
  *     requestBody:
- *       required: true
+ *       required: false
  *       content:
  *         application/json:
  *           schema:
@@ -147,6 +218,26 @@ const { authenticated, authorized } = require("../middleware");
  *         description: Unauthorized
  *       500:
  *         description: Internal server error
+ */
+router.patch("/:id", async (req, res) => {
+  const id = req.params.id;
+  if (!id) {
+    return res.status(400).json({ error: "ID is required" });
+  }
+  const data = req.body;
+  try {
+    const category = await updateCategoryById(id, data);
+    res
+      .status(201)
+      .json({ message: "Category updated successfully", category });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * @swagger
+ * /api/categories/{id}:
  *   delete:
  *     summary: Delete a category
  *     security:
@@ -188,83 +279,8 @@ const { authenticated, authorized } = require("../middleware");
  *       500:
  *         description: Internal server error
  */
-
-// endpoint for category
-app.get("/api/categories", authenticated, async (req, res) => {
-  try {
-    const categories = await getAllCategory();
-    res
-      .status(200)
-      .json({ message: "All categories received successfully", categories });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-app.post(
-  "/api/categories",
-  authenticated,
-  authorized("Admin"),
-  async (req, res) => {
-    const { name, description } = req.body;
-
-    // Check if all fields are filled
-    if (!name || !description) {
-      return res.status(400).json({ error: "Please fill in all fields" });
-    }
-
-    // create the category
-    try {
-      const category = await createCategory({
-        name,
-        description,
-      });
-      res.status(201).json({ message: "Category created successfully", category });
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
-  }
-);
-
-app.get("/api/categories/:id", authenticated, async (req, res) => {
-  const id = req.params.id;
-
-  // Check if id was provided
-  if (!id) {
-    return res.status(400).json({ error: "ID is required" });
-  }
-  try {
-    const category = await getCategoryById(id);
-    if (!category) {
-      res.status(404).json({ error: "Category not found" });
-    } else {
-      res
-        .status(200)
-        .json({ message: "Category gotten successfully", category });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-app.patch("/api/categories/:id", async (req, res) => {
-  const id = req.params.id;
-  if (!id) {
-    return res.status(400).json({ error: "ID is required" });
-  }
-  const data = req.body;
-  try {
-    const category = await updateCategoryById(id, data);
-    res
-      .status(201)
-      .json({ message: "Category updated successfully", category });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-app.delete(
-  "/api/categories/:id",
+router.delete(
+  "/:id",
   authenticated,
   authorized("Admin"),
   async (req, res) => {
@@ -280,3 +296,5 @@ app.delete(
     }
   }
 );
+
+module.exports = router

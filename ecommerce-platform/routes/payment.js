@@ -1,10 +1,16 @@
-const { authenticated, authorized } = require("../middleware");
+const { Router } = require("express")
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const { authenticated, authorized } = require("../handler");
+
+const router = Router()
 
 /**
  * @swagger
  * /api/checkout:
  *   post:
  *     summary: Payment enpoint for products
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Payment
  *     requestBody:
@@ -15,35 +21,27 @@ const { authenticated, authorized } = require("../middleware");
  *             type: object
  *             properties:
  *               amount:
- *                 type: string
+ *                 type: number
  *               name:
  *                 type: string
  *               description:
  *                 type: string
  *               quantity:
- *                 type: string
+ *                 type: number
  *             required:
  *               - amount
  *               - name
  *               - description
  *               - quantity
  *     responses:
- *       201:
- *         description: User authenticated successfully
+ *       301:
+ *         description: Payment successfully, redirecting to payment page
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 message:
- *                   type: string
- *                 amount:
- *                   type: string
- *                 name:
- *                   type: string
- *                 description:
- *                   type: string
- *                 quantity:
+ *                 url:
  *                   type: string
  *       400:
  *         description: Bad request
@@ -52,10 +50,8 @@ const { authenticated, authorized } = require("../middleware");
  *       500:
  *         description: Internal server error
  */
-
-// endpoint for payments
-app.post(
-    "/api/checkout",
+router.post(
+    "/checkout",
     authenticated,
     authorized("User"),
     async (req, res) => {
@@ -72,9 +68,9 @@ app.post(
                         price_data: {
                             currency: "usd",
                             product_data: { name, description },
-                            unit_amount: amount * 100,
+                            unit_amount: parseInt(amount) * 100,
                         },
-                        quantity,
+                        quantity: parseInt(quantity),
                     },
                 ],
                 mode: "payment",
@@ -82,9 +78,11 @@ app.post(
                 cancel_url: `${process.env.BASE_URL}`,
             });
 
-            res.status(201).redirect(session.url);
+            res.status(301).redirect(session.url);
         } catch (error) {
             res.status(500).json({ message: "Error", error });
         }
     }
 );
+
+module.exports = router

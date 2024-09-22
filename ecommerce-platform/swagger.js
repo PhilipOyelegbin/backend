@@ -16,6 +16,7 @@ const options = {
         url: process.env.BASE_URL,
       },
     ],
+    tags: [],
     components: {
       securitySchemes: {
         bearerAuth: {
@@ -31,7 +32,7 @@ const options = {
       },
     ],
   },
-  apis: ["./swaggerui/*.route.js"], // Path to the API docs
+  apis: ["./routes/*.js"], // Path to the API docs
 };
 
 const specs = swaggerJsdoc(options);
