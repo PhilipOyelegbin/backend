@@ -10,6 +10,7 @@ This is collation of all my backend projects from roadmap.sh.
 - **Markdown Note-taking App**: The Markdown Note-taking App is an app that lets users upload markdown files, check the grammar, save the note, and render it in HTML (https://roadmap.sh/projects/markdown-note-taking-app).
 - **Broadcast Server CLI**: The Broadcast Server CLI is a simple broadcast server that will allow clients to connect to it, send messages that will be broadcasted to all connected clients (https://roadmap.sh/projects/broadcast-server).
 - **E-Commerce API**: The E-Commerce API is a simple e-commerce platform with cart and payment gateway integration (https://roadmap.sh/projects/ecommerce-api).
+- **Workout Tracker API**: A backend system for a workout tracker application where users can sign up, log in, create workout plans, and track their progress. The system will feature JWT authentication, CRUD operations for workouts, and generate reports on past workouts (https://roadmap.sh/projects/fitness-workout-tracker).
 
 ## Installation
 To install and set up the an application in the project, follow these steps:

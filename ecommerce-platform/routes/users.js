@@ -1,7 +1,13 @@
-const express = require('express');
-const { getAllUsers, getUserById, createUser, updateUserById, deleteUserById } = require('../controller/user.controller');
-const { authenticated, authorized } = require('../handler');
-const { hashPassword } = require('../auth');
+const express = require("express");
+const {
+  getAllUsers,
+  getUserById,
+  createUser,
+  updateUserById,
+  deleteUserById,
+} = require("../controller/user.controller");
+const { authenticated, authorized } = require("../handler");
+const { hashPassword } = require("../auth");
 const router = express.Router();
 
 /**
@@ -37,7 +43,7 @@ const router = express.Router();
  *                 error:
  *                   type: string
  */
-router.get('/', authenticated, authorized("Admin"), async (req, res) => {
+router.get("/", authenticated, authorized("Admin"), async (req, res) => {
   try {
     const users = await getAllUsers();
     res.status(200).json({ message: "All users received successfully", users });
@@ -104,7 +110,7 @@ router.get('/', authenticated, authorized("Admin"), async (req, res) => {
  *                 error:
  *                   type: string
  */
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   const { name, email, phoneNumber, password } = req.body;
   if (!name || !email || !phoneNumber || !password) {
     return res.status(400).json({ error: "Please fill in all fields" });
@@ -176,7 +182,7 @@ router.post('/', async (req, res) => {
  *                 error:
  *                   type: string
  */
-router.get('/:id', authenticated, async (req, res) => {
+router.get("/:id", authenticated, async (req, res) => {
   const id = req.params.id;
   if (!id) {
     return res.status(400).json({ error: "ID is required" });
@@ -278,8 +284,17 @@ router.patch("/:id", authenticated, async (req, res) => {
   }
   const data = req.body;
   try {
-    const user = await updateUserById(id, data);
-    res.status(200).json({ message: "User updated successfully", user });
+    if (data?.password) {
+      const user = await updateUserById(id, {
+        password: await hashPassword(data?.password),
+      });
+      res
+        .status(200)
+        .json({ message: "User password updated successfully", user });
+    } else {
+      const user = await updateUserById(id, data);
+      res.status(200).json({ message: "User data updated successfully", user });
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -341,22 +356,17 @@ router.patch("/:id", authenticated, async (req, res) => {
  *                 error:
  *                   type: string
  */
-router.delete(
-  "/:id",
-  authenticated,
-  authorized("Admin"),
-  async (req, res) => {
-    const id = req.params.id;
-    if (!id) {
-      return res.status(400).json({ error: "ID is required" });
-    }
-    try {
-      await deleteUserById(id);
-      res.status(200).json({ message: "User deleted" });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+router.delete("/:id", authenticated, authorized("Admin"), async (req, res) => {
+  const id = req.params.id;
+  if (!id) {
+    return res.status(400).json({ error: "ID is required" });
   }
-);
+  try {
+    await deleteUserById(id);
+    res.status(200).json({ message: "User deleted" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 module.exports = router;

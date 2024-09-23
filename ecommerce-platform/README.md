@@ -33,7 +33,7 @@ After installation, you can use the following commands to manage your ecommerce 
 
   <!-- or -->
 
-   npm start
+   npm run start
   ```
 
 ## Example
@@ -41,9 +41,9 @@ Here's an example of how to use the E-Commerce API:
 
 ```bash
 # Start the app
-npm start
+npm run start
 
-# Access the url http://localhost:3001 to view the app.
+# Access the url http://localhost:[port] to view the app.
 ```
 ![preview](./preview.png)
 

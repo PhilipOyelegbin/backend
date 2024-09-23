@@ -1,0 +1,38 @@
+{
+  "name": "workout-tracker",
+  "version": "1.0.0",
+  "description": "A backend system for a workout tracker application where users can sign up, log in, create workout plans, and track their progress. The system will feature JWT authentication, CRUD operations for workouts, and generate reports on past workouts",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm install",
+    "start": "node ./swagger.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "swagger": "node ./swagger.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PhilipOyelegbin/backend.git#master"
+  },
+  "keywords": [
+    "Workout-tracker"
+  ],
+  "author": "Philip Oyelegbin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PhilipOyelegbin/backend/issues"
+  },
+  "homepage": "https://github.com/PhilipOyelegbin/backend/tree/master#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.13.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.3",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "swagger-autogen": "^2.23.7"
+  }
+}
