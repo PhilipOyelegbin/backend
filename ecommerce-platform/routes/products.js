@@ -1,8 +1,15 @@
-const express = require('express');
-const { getAllUsers, getUserById, createUser, updateUserById, deleteUserById } = require('../controller/user.controller');
-const { authenticated, authorized } = require('../handler');
-const { getAllProducts, createProduct, getProductById, updateProductById, deleteProductById } = require("../controller/product.controller")
-const router = express.Router();
+const { Router } = require("express");
+const { authenticated, authorized } = require("../handler");
+const {
+  getAllProducts,
+  createProduct,
+  getProductById,
+  updateProductById,
+  deleteProductById,
+} = require("../controller/product.controller");
+const redisClient = require("../cache");
+
+const router = Router();
 
 /**
  * @swagger
@@ -30,10 +37,21 @@ const router = express.Router();
  */
 router.get("/", async (req, res) => {
   try {
-    const products = await getAllProducts();
-    res
-      .status(200)
-      .json({ message: "All products received successfully", products });
+    let products = null;
+    const key = "products";
+    const value = await redisClient.get(key);
+    if (value) {
+      products = JSON.parse(value);
+      res
+        .status(200)
+        .json({ message: "All products received successfully", products });
+    } else {
+      products = await getAllProducts();
+      await redisClient.set(key, JSON.stringify(products), { EX: 300 });
+      res
+        .status(200)
+        .json({ message: "All products received successfully", products });
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -96,23 +114,18 @@ router.get("/", async (req, res) => {
  *       500:
  *         description: Internal server error
  */
-router.post(
-  "/",
-  authenticated,
-  authorized("Admin"),
-  async (req, res) => {
-    const { name, description, price, stock } = req.body;
-    if (!name || !description || !price || !stock) {
-      return res.status(400).json({ message: "All fields are required" });
-    }
-    try {
-      const product = await createProduct({ name, description, price, stock });
-      res.status(200).json({ message: "Product saved successfully", product });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+router.post("/", authenticated, authorized("Admin"), async (req, res) => {
+  const { name, description, price, stock } = req.body;
+  if (!name || !description || !price || !stock) {
+    return res.status(400).json({ message: "All fields are required" });
   }
-);
+  try {
+    const product = await createProduct({ name, description, price, stock });
+    res.status(200).json({ message: "Product saved successfully", product });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 /**
  * @swagger
@@ -221,7 +234,7 @@ router.get("/:id", authenticated, async (req, res) => {
  *       500:
  *         description: Internal server error
  */
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", authenticated, async (req, res) => {
   const id = req.params.id;
   if (!id) {
     return res.status(400).json({ error: "ID is required" });
@@ -264,22 +277,17 @@ router.patch("/:id", async (req, res) => {
  *       500:
  *         description: Internal server error
  */
-router.delete(
-  "/:id",
-  authenticated,
-  authorized("Admin"),
-  async (req, res) => {
-    const id = req.params.id;
-    if (!id) {
-      return res.status(400).json({ error: "ID is required" });
-    }
-    try {
-      await deleteProductById(id);
-      res.status(200).json({ message: "Product deleted" });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+router.delete("/:id", authenticated, authorized("Admin"), async (req, res) => {
+  const id = req.params.id;
+  if (!id) {
+    return res.status(400).json({ error: "ID is required" });
   }
-);
+  try {
+    await deleteProductById(id);
+    res.status(200).json({ message: "Product deleted" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
-module.exports = router
+module.exports = router;

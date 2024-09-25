@@ -11,20 +11,20 @@ app.use(express.json()); // Ensure JSON middleware is applied first
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 // Import routes
-const authRoutes = require('./routes/auth');
-const userRoutes = require('./routes/users');
-const productRoutes = require('./routes/products');
-const categoryRoutes = require('./routes/category');
-const cartRoutes = require('./routes/carts');
-const paymentRoutes = require('./routes/payment');
+const authRoutes = require("./routes/auth");
+const userRoutes = require("./routes/users");
+const productRoutes = require("./routes/products");
+const categoryRoutes = require("./routes/category");
+const cartRoutes = require("./routes/carts");
+const paymentRoutes = require("./routes/payment");
 
 // Use routes
-app.use('/api', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/products', productRoutes);
-app.use('/api/categories', categoryRoutes);
-app.use('/api/carts', cartRoutes);
-app.use('/api', paymentRoutes);
+app.use("/api", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/carts", cartRoutes);
+app.use("/api", paymentRoutes);
 
 // Swagger setup
 app.use("/", swaggerUi.serve, swaggerUi.setup(specs));
