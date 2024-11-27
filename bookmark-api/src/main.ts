@@ -4,7 +4,14 @@ import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    cors: {
+      origin: ['http://localhost:3000', 'http://localhost:5173'],
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      preflightContinue: false,
+      optionsSuccessStatus: 204,
+    },
+  });
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.setGlobalPrefix('/api/v1');
 
