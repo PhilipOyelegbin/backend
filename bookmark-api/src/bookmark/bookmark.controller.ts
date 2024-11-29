@@ -24,7 +24,7 @@ export class BookmarkController {
   constructor(private bookmarkService: BookmarkService) {}
 
   @Post()
-  create(
+  async create(
     @GetUser('id') userId: string,
     @Body() createBookmarkDto: CreateBookmarkDto,
   ) {

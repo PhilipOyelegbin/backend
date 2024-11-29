@@ -1,0 +1,98 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String       @id @default(cuid())
+  name         String
+  email        String       @unique
+  phone_number String?
+  address      String?
+  password     String
+  role         Role         @default(Customer)
+  Reservation  Reservation?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+
+  @@map("users")
+}
+
+model Movie {
+  id          String        @id @default(cuid())
+  title       String
+  description String?
+  cover_image String
+  show_time   String?
+  category    Category      @default(Null)
+  Reservation Reservation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+
+  @@map("movies")
+}
+
+model Theater {
+  id          String        @id @default(cuid())
+  name        String
+  address     String
+  capacity    Int
+  Reservation Reservation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+
+  @@map("theaters")
+}
+
+model Reservation {
+  id           String  @id @default(cuid())
+  num_ticket   Int
+  ticket_price Decimal
+  total_price  Decimal
+  movie        Movie   @relation(fields: [movieId], references: [id])
+  movieId      String
+  theaterId    String
+  theater      Theater @relation(fields: [theaterId], references: [id])
+  user         User    @relation(fields: [userId], references: [id])
+  userId       String  @unique
+  status       Status  @default(Pending)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+
+  @@map("reservations")
+}
+
+enum Role {
+  Admin
+  Customer
+}
+
+enum Category {
+  Action
+  Adventure
+  Drama
+  Romance
+  SiFi
+  Thriller
+  Null
+}
+
+enum Status {
+  Pending
+  Confirmed
+  Cancelled
+}

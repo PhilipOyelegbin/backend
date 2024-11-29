@@ -1,8 +1,8 @@
-const { Router } = require("express")
+const { Router } = require("express");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const { authenticated, authorized } = require("../handler");
 
-const router = Router()
+const router = Router();
 
 /**
  * @swagger
@@ -51,38 +51,38 @@ const router = Router()
  *         description: Internal server error
  */
 router.post(
-    "/checkout",
-    authenticated,
-    authorized("User"),
-    async (req, res) => {
-        const { amount, name, description, quantity } = req.body;
+  "/checkout",
+  authenticated,
+  authorized("User"),
+  async (req, res) => {
+    const { amount, name, description, quantity } = req.body;
 
-        if (!amount || !name || !description || !quantity) {
-            return res.status(400).json({ message: "A required field is missing!" });
-        }
-
-        try {
-            const session = await stripe.checkout.sessions.create({
-                line_items: [
-                    {
-                        price_data: {
-                            currency: "usd",
-                            product_data: { name, description },
-                            unit_amount: parseInt(amount) * 100,
-                        },
-                        quantity: parseInt(quantity),
-                    },
-                ],
-                mode: "payment",
-                success_url: `${process.env.BASE_URL}/feedback`,
-                cancel_url: `${process.env.BASE_URL}`,
-            });
-
-            res.status(301).redirect(session.url);
-        } catch (error) {
-            res.status(500).json({ message: "Error", error });
-        }
+    if (!amount || !name || !description || !quantity) {
+      return res.status(400).json({ message: "A required field is missing!" });
     }
+
+    try {
+      const session = await stripe.checkout.sessions.create({
+        line_items: [
+          {
+            price_data: {
+              currency: "usd",
+              product_data: { name, description },
+              unit_amount: parseInt(amount) * 100,
+            },
+            quantity: parseInt(quantity),
+          },
+        ],
+        mode: "payment",
+        success_url: `${process.env.BASE_URL}/feedback`,
+        cancel_url: `${process.env.BASE_URL}`,
+      });
+
+      res.status(301).redirect(session.url);
+    } catch (error) {
+      res.status(500).json({ message: "Error", error });
+    }
+  }
 );
 
-module.exports = router
+module.exports = router;
