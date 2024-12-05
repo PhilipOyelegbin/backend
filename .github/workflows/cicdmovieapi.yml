@@ -5,7 +5,7 @@ name: Test and Build
 
 on:
   push:
-    branches: [main]
+    branches: ["main"]
 
 jobs:
   build-and-test:
