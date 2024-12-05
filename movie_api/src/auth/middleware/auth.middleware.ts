@@ -9,7 +9,7 @@ import { Request, Response, NextFunction } from 'express';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
-// middleware for movie and theater role based authoriazation
+// middleware for movie and theater role based authorization
 export class MovieRoleAuth implements NestMiddleware {
   constructor(
     private jwt: JwtService,
@@ -40,7 +40,7 @@ export class MovieRoleAuth implements NestMiddleware {
   }
 }
 
-// middleware for reservation role based authoriazation
+// middleware for reservation role based authorization
 export class ReserviationRoleAuth implements NestMiddleware {
   constructor(
     private jwt: JwtService,

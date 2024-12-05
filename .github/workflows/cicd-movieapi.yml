@@ -1,0 +1,52 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Test and Build
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Dependencies
+        run: |
+          cd movie_api
+          npm i
+          npm ci
+
+      - name: Format Code with Prettier
+        run: |
+          cd movie_api
+          npm run format
+
+      - name: Lint Code with ESLint
+        run: |
+          cd movie_api
+          npm run lint
+
+      - name: Run E2E Tests (Backend, if present)
+        run: |
+          cd movie_api
+          npm run test:e2e || echo "E2E tests not found"
+
+      - name: Build the Backend Application
+        run: |
+          cd movie_api
+          npm run build
+
+

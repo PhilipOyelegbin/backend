@@ -62,8 +62,8 @@ model Reservation {
   num_ticket   Int
   ticket_price Decimal
   total_price  Decimal
-  movie        Movie   @relation(fields: [movieId], references: [id])
   movieId      String
+  movie        Movie   @relation(fields: [movieId], references: [id])
   theaterId    String
   theater      Theater @relation(fields: [theaterId], references: [id])
   user         User    @relation(fields: [userId], references: [id])
