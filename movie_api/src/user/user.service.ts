@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UpdateUserDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as argon from 'argon2';
@@ -6,6 +6,7 @@ import * as argon from 'argon2';
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
+
   // function to update the loggedin user
   async update(id: string, dto: UpdateUserDto) {
     try {

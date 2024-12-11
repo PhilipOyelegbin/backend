@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePaymentDto } from './dto/create-payment.dto';
-import { UpdatePaymentDto } from './dto/update-payment.dto';
+import { CreatePaymentDto } from './dto';
 import Stripe from 'stripe';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class PaymentService {
-  constructor(private stripe: Stripe) {}
+  stripe = new Stripe(this.config.getOrThrow('STRIPE_SECRET_KEY'));
+
+  constructor(private readonly config: ConfigService) {}
+
   async create(dto: CreatePaymentDto) {
     try {
       const session = await this.stripe.checkout.sessions.create({
@@ -20,8 +23,8 @@ export class PaymentService {
           },
         ],
         mode: 'payment',
-        success_url: `${process.env.BASE_URL}/feedback`,
-        cancel_url: `${process.env.BASE_URL}`,
+        success_url: `${this.config.getOrThrow('BASE_URL')}/feedback`,
+        cancel_url: `${this.config.getOrThrow('BASE_URL')}`,
       });
       return { checkout_url: session.url };
     } catch (error) {
@@ -33,15 +36,7 @@ export class PaymentService {
     return `This action returns all payment`;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} payment`;
-  }
-
-  update(id: number, updatePaymentDto: UpdatePaymentDto) {
-    return `This action updates a #${id} payment`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} payment`;
   }
 }

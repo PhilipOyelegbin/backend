@@ -6,9 +6,9 @@ import {
 } from '@nestjs/common';
 import { MovieService } from './movie.service';
 import { MovieController } from './movie.controller';
-import { MovieRoleAuth } from 'src/auth/middleware';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from 'src/auth/strategy';
+import { JwtStrategy } from '../auth/strategy/jwt.strategy';
+import { MovieRoleAuth } from '../auth/middleware/auth.middleware';
 
 @Module({
   imports: [

@@ -6,6 +6,11 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
+  UploadedFile,
+  ParseFilePipe,
+  MaxFileSizeValidator,
+  FileTypeValidator,
 } from '@nestjs/common';
 import { MovieService } from './movie.service';
 import { CreateMovieDto, UpdateMovieDto } from './dto';
@@ -15,6 +20,7 @@ import {
   ApiParam,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiBearerAuth()
 @ApiUnauthorizedResponse({
@@ -26,8 +32,20 @@ export class MovieController {
   constructor(private readonly movieService: MovieService) {}
 
   @Post()
-  create(@Body() dto: CreateMovieDto) {
-    return this.movieService.create(dto);
+  @UseInterceptors(FileInterceptor('cover_image'))
+  create(
+    @Body() dto: CreateMovieDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 10000000 }),
+          new FileTypeValidator({ fileType: 'image/*' }),
+        ],
+      }),
+    )
+    file: Express.Multer.File,
+  ) {
+    return this.movieService.create(dto, file.originalname, file.buffer);
   }
 
   @Get()
@@ -43,8 +61,14 @@ export class MovieController {
 
   @ApiParam({ name: 'id' })
   @Patch(':id')
-  update(@Param('id') id: string, @Body() dto: UpdateMovieDto) {
-    return this.movieService.update(id, dto);
+  @UseInterceptors(FileInterceptor('cover_image'))
+  update(
+    @Param('id') id: string,
+    @Body() dto: UpdateMovieDto,
+    @UploadedFile()
+    file: Express.Multer.File,
+  ) {
+    return this.movieService.update(id, dto, file?.originalname, file?.buffer);
   }
 
   @ApiParam({ name: 'id' })

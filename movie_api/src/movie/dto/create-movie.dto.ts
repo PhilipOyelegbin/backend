@@ -19,13 +19,12 @@ export class CreateMovieDto {
   @IsOptional()
   description: string;
 
-  @ApiProperty({
-    description: 'The cover image of the movie',
-    example:
-      'https://image.tmdb.org/t/p/w500/q6725a94750c802b1ca5c3a576016e37.jpg',
+  @ApiPropertyOptional({
+    description: 'The cover image of the movie must be a file upload',
+    example: '/path_to_file',
   })
-  @IsNotEmpty({ message: 'The cover image can not be blank' })
-  @IsString({ message: 'The cover image must be a string' })
+  @IsOptional()
+  @IsString({ message: 'The cover image must be a string of file path' })
   cover_image: string;
 
   @ApiProperty({

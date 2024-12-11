@@ -11,7 +11,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import {
   ApiBearerAuth,
   ApiOkResponse,
-  ApiParam,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { GetUser } from 'src/auth/decorator';
@@ -39,15 +38,13 @@ export class UserController {
   }
 
   // update the loggedin user
-  @ApiParam({ name: 'id' })
-  @Patch(':id')
+  @Patch('me')
   update(@GetUser('id') id: string, @Body() dto: UpdateUserDto) {
     return this.userService.update(id, dto);
   }
 
   // delete the loggedin user
-  @ApiParam({ name: 'id' })
-  @Delete(':id')
+  @Delete('me')
   remove(@GetUser('id') id: string) {
     return this.userService.remove(id);
   }
