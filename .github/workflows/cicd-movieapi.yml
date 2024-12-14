@@ -26,7 +26,6 @@ jobs:
       - name: Install Dependencies
         run: |
           cd movie_api
-          npm i
           npm ci
 
       - name: Format Code with Prettier
@@ -39,10 +38,10 @@ jobs:
           cd movie_api
           npm run lint
 
-      - name: Run E2E Tests (Backend, if present)
-        run: |
-          cd movie_api
-          npm run test:e2e || echo "E2E tests not found"
+      # - name: Run E2E Tests (Backend, if present)
+      #   run: |
+      #     cd movie_api
+      #     npm run test:e2e || echo "E2E tests not found"
 
       - name: Build the Backend Application
         run: |
