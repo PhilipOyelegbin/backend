@@ -1,6 +1,6 @@
 import { ApiPropertyOptional, PartialType } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
-import { SignUpDto } from 'src/auth/dto';
+import { SignUpDto } from '../../auth/dto/signup.dto';
 
 export class UpdateUserDto extends PartialType(SignUpDto) {
   @ApiPropertyOptional({ description: 'The name of the user' })
