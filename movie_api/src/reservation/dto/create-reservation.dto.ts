@@ -8,7 +8,7 @@ export class CreateReservationDto {
   })
   @IsNotEmpty({ message: 'The number of ticket can not be blank' })
   @IsNumber({}, { message: 'The number of ticket must be a string' })
-  num_ticket: Number;
+  num_ticket: number;
 
   @ApiProperty({
     description: 'The ticket price for the reservation',
@@ -16,7 +16,7 @@ export class CreateReservationDto {
   })
   @IsNotEmpty({ message: 'The ticket price can not be blank' })
   @IsNumber({}, { message: 'The ticket price must be a number' })
-  ticket_price: Number;
+  ticket_price: number;
 
   @ApiProperty({
     description: 'The movie id for the reservation',

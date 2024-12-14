@@ -9,5 +9,5 @@ export class UpdateReservationDto extends PartialType(CreateReservationDto) {
   })
   @IsString({ message: 'The status must be a string' })
   @IsOptional()
-  status: String;
+  status: string;
 }
