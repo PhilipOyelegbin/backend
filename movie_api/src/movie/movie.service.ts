@@ -56,7 +56,7 @@ export class MovieService {
       const movie = await this.prisma.movie.findMany();
 
       const moviesWithImage = movie.map((list) => {
-        const cover_image = `${process.env.S3_API}/${list.cover_image}`;
+        const cover_image = `${process.env.R2_PUBLIC_ENDPOINT}/${list.cover_image}`;
         return {
           ...list,
           cover_image,
@@ -78,7 +78,7 @@ export class MovieService {
           'Movie with the provdied ID does not exist.',
         );
 
-      const cover_image = `${process.env.S3_API}/${movie.cover_image}`;
+      const cover_image = `${process.env.R2_PUBLIC_ENDPOINT}/${movie.cover_image}`;
 
       return { ...movie, cover_image };
     } catch (error) {
@@ -142,7 +142,7 @@ export class MovieService {
 
       // Construct the full movie image URL
       const fullMovieImage = updatedMovie.cover_image
-        ? `${process.env.S3_API}/${updatedMovie.cover_image}`
+        ? `${process.env.R2_PUBLIC_ENDPOINT}/${updatedMovie.cover_image}`
         : null;
 
       return {
