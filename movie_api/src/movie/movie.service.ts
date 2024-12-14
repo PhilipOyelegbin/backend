@@ -27,7 +27,7 @@ export class MovieService {
   // function to add a movie to the database
   async create(dto: CreateMovieDto, fileName: string, file: Buffer) {
     try {
-      const resp = await this.s3Client.send(
+      await this.s3Client.send(
         new PutObjectCommand({
           Bucket: this.configService.getOrThrow('BUCKET_NAME'),
           Key: fileName,
