@@ -4,11 +4,11 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common';
-import { MovieRoleAuth } from 'src/auth/middleware';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from 'src/auth/strategy';
 import { TheaterController } from './theater.controller';
 import { TheaterService } from './theater.service';
+import { JwtStrategy } from '../auth/strategy/jwt.strategy';
+import { MovieRoleAuth } from '../auth/middleware/auth.middleware';
 
 @Module({
   imports: [
