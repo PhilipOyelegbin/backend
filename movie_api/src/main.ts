@@ -17,7 +17,7 @@ async function bootstrap() {
 
   // setting up swagger ui documentation
   const config = new DocumentBuilder()
-    .setTitle('Movie Reservatin API')
+    .setTitle('Movie Reservation API')
     .setDescription('The movie reservation API description')
     .setVersion('1.0')
     .addBearerAuth()
