@@ -1,14 +1,8 @@
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  RequestMethod,
-} from '@nestjs/common';
+import { Module, NestModule } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TheaterController } from './theater.controller';
 import { TheaterService } from './theater.service';
 import { JwtStrategy } from '../auth/strategy/jwt.strategy';
-import { MovieRoleAuth } from '../auth/middleware/auth.middleware';
 
 @Module({
   imports: [
@@ -21,10 +15,5 @@ import { MovieRoleAuth } from '../auth/middleware/auth.middleware';
   providers: [TheaterService, JwtStrategy],
 })
 export class TheaterModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(MovieRoleAuth)
-      .exclude({ path: '*', method: RequestMethod.GET })
-      .forRoutes(TheaterController);
-  }
+  configure() {}
 }

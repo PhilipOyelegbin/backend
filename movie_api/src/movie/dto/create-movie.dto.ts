@@ -1,5 +1,11 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsDateString,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateMovieDto {
   @ApiProperty({
@@ -28,10 +34,23 @@ export class CreateMovieDto {
   cover_image: string;
 
   @ApiProperty({
-    description: 'The showtime of the movie',
-    example: '2023-11-28, 18:30',
+    description: 'The show time of the movie in 24 hours',
+    example: '11:30:00',
   })
   @IsNotEmpty({ message: 'The show time cannot be blank' })
   @IsString({ message: 'The show time must be a string' })
   show_time: string;
+
+  @ApiProperty({
+    description: 'The show date of the movie',
+    example: '2025-03-26',
+  })
+  @IsNotEmpty({ message: 'The show date cannot be blank' })
+  @IsDateString({}, { message: 'The show date must be a date string' })
+  show_date: string;
+
+  @ApiProperty({ description: 'The price of the movie', example: '200.00' })
+  @IsNotEmpty({ message: 'The price can not be empty' })
+  @IsString({ message: 'The price must be a string' })
+  price: string;
 }

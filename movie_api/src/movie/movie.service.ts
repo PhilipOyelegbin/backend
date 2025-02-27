@@ -37,10 +37,10 @@ export class MovieService {
 
       const movie = await this.prisma.movie.create({
         data: {
-          title: dto.title,
-          description: dto.description,
+          ...dto,
           cover_image: fileName,
-          show_time: dto.show_time,
+          price: Number(dto.price),
+          show_date: new Date(dto.show_date),
         },
       });
 
@@ -69,13 +69,77 @@ export class MovieService {
     }
   }
 
+  // function to search for movie from the database
+  async search(title: string, price: string) {
+    try {
+      const whereClause: any = {};
+
+      if (title) {
+        whereClause.title = { contains: title, mode: 'insensitive' };
+      }
+
+      if (price) {
+        whereClause.price = Number(price);
+      }
+
+      const movie = await this.prisma.movie.findMany({
+        where: whereClause,
+      });
+      if (!movie || movie.length === 0)
+        throw new NotFoundException('No result found.');
+
+      const movieWithImage = movie.map((list) => {
+        const cover_image = `${process.env.R2_PUBLIC_ENDPOINT}/${list.cover_image}`;
+        return {
+          ...list,
+          cover_image,
+        };
+      });
+
+      return movieWithImage;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // function to filter movie by category from the database
+  async filter(category?: string) {
+    try {
+      const whereClause: any = {};
+
+      if (category) {
+        whereClause.category = category;
+      }
+
+      const movie = await this.prisma.movie.findMany({
+        where: whereClause,
+      });
+
+      if (!movie || movie.length === 0) {
+        throw new NotFoundException('No result found.');
+      }
+
+      const movieWithImage = movie.map((list) => {
+        const cover_image = `${process.env.R2_PUBLIC_ENDPOINT}/${list.cover_image}`;
+        return {
+          ...list,
+          cover_image,
+        };
+      });
+
+      return movieWithImage;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   // function to find a movie from the database
   async findOne(id: string) {
     try {
       const movie = await this.prisma.movie.findUnique({ where: { id } });
       if (!movie)
         throw new NotFoundException(
-          'Movie with the provdied ID does not exist.',
+          'Movie with the provided ID does not exist.',
         );
 
       const cover_image = `${process.env.R2_PUBLIC_ENDPOINT}/${movie.cover_image}`;
@@ -137,6 +201,8 @@ export class MovieService {
         data: <any>{
           ...dto,
           cover_image: movieImage,
+          price: Number(dto?.price) || undefined,
+          show_date: dto.show_date ? new Date(dto?.show_date) : undefined,
         },
       });
 
@@ -160,7 +226,7 @@ export class MovieService {
       const movie = await this.prisma.movie.delete({ where: { id } });
       if (!movie)
         throw new NotFoundException(
-          'Movie with the provdied ID does not exist.',
+          'Movie with the provided ID does not exist.',
         );
 
       await this.s3Client.send(

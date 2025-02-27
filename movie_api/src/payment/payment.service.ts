@@ -26,6 +26,7 @@ export class PaymentService {
         success_url: `${this.config.getOrThrow('BASE_URL')}/feedback`,
         cancel_url: `${this.config.getOrThrow('BASE_URL')}`,
       });
+
       return { checkout_url: session.url };
     } catch (error) {
       throw error;

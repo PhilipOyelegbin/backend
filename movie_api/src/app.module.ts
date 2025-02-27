@@ -7,6 +7,8 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { TheaterModule } from './theater/theater.module';
 import { PaymentModule } from './payment/payment.module';
+import { FavoriteModule } from './favorite/favorite.module';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { PaymentModule } from './payment/payment.module';
     ReservationModule,
     PrismaModule,
     PaymentModule,
+    FavoriteModule,
+    NotificationModule,
   ],
 })
 export class AppModule {}

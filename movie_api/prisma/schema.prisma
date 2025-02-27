@@ -15,19 +15,32 @@ datasource db {
 }
 
 model User {
-  id           String       @id @default(cuid())
-  name         String
-  email        String       @unique
-  phone_number String?
-  address      String?
-  password     String
-  role         Role         @default(Customer)
-  Reservation  Reservation?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt()
+  id               String       @id @default(cuid())
+  name             String
+  email            String       @unique
+  phone_number     String?
+  address          String?
+  password         String
+  role             Role         @default(Customer)
+  reservation      Reservation?
+  favorite         Favorite[]
+  reset_token      String?
+  reset_expiration String?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt()
 
   @@map("users")
+}
+
+model Favorite {
+  id        String   @id @default(cuid())
+  userId    String
+  movieId   String
+  user      User     @relation(fields: [userId], references: [id])
+  movie     Movie    @relation(fields: [movieId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@map("favorites")
 }
 
 model Movie {
@@ -35,12 +48,14 @@ model Movie {
   title       String
   description String?
   cover_image String
-  show_time   String?
+  show_time   String
+  show_date   DateTime
+  price       Float
   category    Category      @default(Null)
-  Reservation Reservation[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt()
+  reservation Reservation[]
+  favorite    Favorite[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt()
 
   @@map("movies")
 }
@@ -50,31 +65,38 @@ model Theater {
   name        String
   address     String
   capacity    Int
-  Reservation Reservation[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt()
+  reservation Reservation[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt()
 
   @@map("theaters")
 }
 
 model Reservation {
-  id           String  @id @default(cuid())
+  id           String   @id @default(cuid())
   num_ticket   Int
   ticket_price Decimal
   total_price  Decimal
   movieId      String
-  movie        Movie   @relation(fields: [movieId], references: [id])
   theaterId    String
-  theater      Theater @relation(fields: [theaterId], references: [id])
-  user         User    @relation(fields: [userId], references: [id])
-  userId       String  @unique
-  status       Status  @default(Pending)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt()
+  userId       String   @unique
+  sessionId    String?
+  status       Status   @default(Pending)
+  movie        Movie    @relation(fields: [movieId], references: [id])
+  theater      Theater  @relation(fields: [theaterId], references: [id])
+  user         User     @relation(fields: [userId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt()
 
   @@map("reservations")
+}
+
+model BlacklistToken {
+  id           String   @unique @default(cuid())
+  access_token String
+  createdAt    DateTime @default(now())
+
+  @@map("blacklisttokens")
 }
 
 enum Role {
@@ -89,6 +111,7 @@ enum Category {
   Romance
   SiFi
   Thriller
+  Others
   Null
 }
 
