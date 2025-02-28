@@ -73,20 +73,19 @@ model Theater {
 }
 
 model Reservation {
-  id           String   @id @default(cuid())
-  num_ticket   Int
-  ticket_price Decimal
-  total_price  Decimal
-  movieId      String
-  theaterId    String
-  userId       String   @unique
-  sessionId    String?
-  status       Status   @default(Pending)
-  movie        Movie    @relation(fields: [movieId], references: [id])
-  theater      Theater  @relation(fields: [theaterId], references: [id])
-  user         User     @relation(fields: [userId], references: [id])
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt()
+  id          String   @id @default(cuid())
+  num_ticket  Int
+  total_price Decimal?
+  movieId     String
+  theaterId   String
+  userId      String   @unique
+  sessionId   String?
+  status      Status   @default(Pending)
+  movie       Movie    @relation(fields: [movieId], references: [id])
+  theater     Theater  @relation(fields: [theaterId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt()
 
   @@map("reservations")
 }

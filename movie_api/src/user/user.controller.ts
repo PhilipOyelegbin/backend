@@ -5,11 +5,16 @@ import {
   Patch,
   Delete,
   UseGuards,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import {
+  ApiAcceptedResponse,
   ApiBearerAuth,
+  ApiInternalServerErrorResponse,
+  ApiNoContentResponse,
   ApiOkResponse,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -19,15 +24,16 @@ import { JwtGuard } from '../auth/guard/auth.guard';
 
 @ApiBearerAuth()
 @ApiUnauthorizedResponse({
-  description: 'The user is not unathorized to perform this action',
+  description: 'The user is unathorized to perform this action',
 })
-@ApiOkResponse({ description: 'Successfull' })
+@ApiInternalServerErrorResponse({ description: 'Internal server error' })
 @UseGuards(JwtGuard)
 @Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
 
   // get the loggedin user
+  @ApiOkResponse({ description: 'Retrieved successfully' })
   @Get('me')
   findOne(@GetUser() user: User) {
     try {
@@ -38,12 +44,16 @@ export class UserController {
   }
 
   // update the loggedin user
+  @ApiAcceptedResponse({ description: 'Updated successfully' })
+  @HttpCode(HttpStatus.ACCEPTED)
   @Patch('me')
   update(@GetUser('id') id: string, @Body() dto: UpdateUserDto) {
     return this.userService.update(id, dto);
   }
 
   // delete the loggedin user
+  @ApiNoContentResponse({ description: 'Deleted successfully' })
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Delete('me')
   remove(@GetUser('id') id: string) {
     return this.userService.remove(id);

@@ -6,9 +6,9 @@ import { ReservationModule } from './reservation/reservation.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { TheaterModule } from './theater/theater.module';
-import { PaymentModule } from './payment/payment.module';
 import { FavoriteModule } from './favorite/favorite.module';
 import { NotificationModule } from './notification/notification.module';
+import { WebhookModule } from './webhook/webhook.module';
 
 @Module({
   imports: [
@@ -19,9 +19,9 @@ import { NotificationModule } from './notification/notification.module';
     TheaterModule,
     ReservationModule,
     PrismaModule,
-    PaymentModule,
     FavoriteModule,
     NotificationModule,
+    WebhookModule,
   ],
 })
 export class AppModule {}

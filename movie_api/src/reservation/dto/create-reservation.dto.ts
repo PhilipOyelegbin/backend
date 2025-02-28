@@ -11,14 +11,6 @@ export class CreateReservationDto {
   num_ticket: number;
 
   @ApiProperty({
-    description: 'The ticket price for the reservation',
-    example: 50.25,
-  })
-  @IsNotEmpty({ message: 'The ticket price can not be blank' })
-  @IsNumber({}, { message: 'The ticket price must be a number' })
-  ticket_price: number;
-
-  @ApiProperty({
     description: 'The movie id for the reservation',
     example: 'cm42lbano0000l193sdnh9pd5',
   })
@@ -27,7 +19,7 @@ export class CreateReservationDto {
   movieId: string;
 
   @ApiProperty({
-    description: 'The movie id for the reservation',
+    description: 'The theater id for the reservation',
     example: 'cm42lbano0000l193sdnh9pd5',
   })
   @IsNotEmpty({ message: 'The theater id can not be blank' })

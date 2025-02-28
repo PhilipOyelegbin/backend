@@ -14,9 +14,10 @@ import {
   ApiAcceptedResponse,
   ApiBearerAuth,
   ApiCreatedResponse,
+  ApiInternalServerErrorResponse,
   ApiNoContentResponse,
+  ApiNotFoundResponse,
   ApiOkResponse,
-  ApiParam,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { TheaterService } from './theater.service';
@@ -27,9 +28,11 @@ import { Roles } from '../auth/decorator/role.decorator';
 
 @ApiBearerAuth()
 @ApiUnauthorizedResponse({
-  description: 'The user is not unathorized to perform this action',
+  description: 'The user is unathorized to perform this action',
 })
-@ApiOkResponse({ description: 'Successfull' })
+@ApiInternalServerErrorResponse({
+  description: 'Internal server error',
+})
 @UseGuards(JwtGuard, RolesGuard)
 @Controller('theaters')
 export class TheaterController {
@@ -49,14 +52,14 @@ export class TheaterController {
   }
 
   @ApiOkResponse({ description: 'Successfull' })
-  @ApiParam({ name: 'id' })
+  @ApiNotFoundResponse({ description: 'Not found' })
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.theaterService.findOne(id);
   }
 
   @ApiAcceptedResponse({ description: 'Data accepted' })
-  @ApiParam({ name: 'id' })
+  @ApiNotFoundResponse({ description: 'Not found' })
   @HttpCode(HttpStatus.ACCEPTED)
   @Patch(':id')
   @Roles('Admin')
@@ -65,7 +68,7 @@ export class TheaterController {
   }
 
   @ApiNoContentResponse({ description: 'Deleted successfully' })
-  @ApiParam({ name: 'id' })
+  @ApiNotFoundResponse({ description: 'Not found' })
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   @Roles('Admin')

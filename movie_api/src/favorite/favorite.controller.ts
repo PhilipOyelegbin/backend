@@ -17,17 +17,18 @@ import { JwtGuard } from '../auth/guard/auth.guard';
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
+  ApiInternalServerErrorResponse,
   ApiNoContentResponse,
+  ApiNotFoundResponse,
   ApiOkResponse,
-  ApiParam,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
 @ApiBearerAuth()
 @ApiUnauthorizedResponse({
-  description: 'The user is not unathorized to perform this action',
+  description: 'The user is unathorized to perform this action',
 })
-@ApiOkResponse({ description: 'Successfull' })
+@ApiInternalServerErrorResponse({ description: 'Internal server error' })
 @UseGuards(JwtGuard)
 @Controller('favorite')
 export class FavoriteController {
@@ -46,14 +47,14 @@ export class FavoriteController {
   }
 
   @ApiOkResponse({ description: 'Successfull' })
-  @ApiParam({ name: 'id' })
+  @ApiNotFoundResponse({ description: 'Not found' })
   @Get(':id')
   findOne(@GetUser() user: User, @Param('id') id: string) {
     return this.favoriteService.findOne(user.id, id);
   }
 
   @ApiNoContentResponse({ description: 'Deleted successfully' })
-  @ApiParam({ name: 'id' })
+  @ApiNotFoundResponse({ description: 'Not found' })
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   remove(@GetUser() user: User, @Param('id') id: string) {

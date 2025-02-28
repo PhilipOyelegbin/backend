@@ -10,37 +10,62 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import { JwtGuard } from '../auth/guard';
+import { JwtGuard, RolesGuard } from '../auth/guard';
 import { GetUser } from '../auth/decorator/get-user.decorator';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import {
+  ApiAcceptedResponse,
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiInternalServerErrorResponse,
+  ApiNoContentResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { CreateReservationDto, UpdateReservationDto } from './dto';
 import { ReservationService } from './reservation.service';
+import { Roles } from '../auth/decorator/role.decorator';
 
 @ApiBearerAuth()
-@UseGuards(JwtGuard)
+@ApiUnauthorizedResponse({
+  description: 'The user is unathorized to perform this action',
+})
+@ApiInternalServerErrorResponse({
+  description: 'Internal server error',
+})
+@UseGuards(JwtGuard, RolesGuard)
 @Controller('reservations')
 export class ReservationController {
   constructor(private reservationService: ReservationService) {}
 
+  @ApiCreatedResponse({ description: 'Created Successfull' })
   @Post()
+  @Roles('User')
   async create(
     @GetUser('id') userId: string,
     @Body() dto: CreateReservationDto,
   ) {
-    return this.reservationService.create(userId, dto);
+    return this.reservationService.createReservationAndCheckout(userId, dto);
   }
 
+  @ApiOkResponse({ description: 'Successfull' })
   @Get()
   findAll(@GetUser('id') userId: string) {
     return this.reservationService.findAll(userId);
   }
 
+  @ApiOkResponse({ description: 'Successfull' })
+  @ApiNotFoundResponse({ description: 'Not found' })
   @Get(':id')
   findOne(@GetUser('id') userId: string, @Param('id') reservationId: string) {
     return this.reservationService.findOne(userId, reservationId);
   }
 
+  @ApiAcceptedResponse({ description: 'Data accepted' })
+  @ApiNotFoundResponse({ description: 'Not found' })
+  @HttpCode(HttpStatus.ACCEPTED)
   @Patch(':id')
+  @Roles('Admin')
   update(
     @GetUser('id') userId: string,
     @Param('id') reservationId: string,
@@ -53,8 +78,11 @@ export class ReservationController {
     );
   }
 
+  @ApiNoContentResponse({ description: 'Deleted successfully' })
+  @ApiNotFoundResponse({ description: 'Not found' })
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
+  @Roles('Admin')
   remove(@GetUser('id') userId: string, @Param('id') reservationId: string) {
     return this.reservationService.remove(userId, reservationId);
   }

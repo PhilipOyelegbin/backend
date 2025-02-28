@@ -119,8 +119,8 @@ export class AuthService {
       });
 
       // send reset token to the user
-      let subject = `Password Reset Request`;
-      let message = `
+      const subject = `Password Reset Request`;
+      const message = `
       <p>Hi,</p>
 
       <p>You requested a password reset. Here is your reset token: <b>${resetToken}</b> to reset your password.</p>
