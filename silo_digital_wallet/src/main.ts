@@ -27,6 +27,8 @@ async function bootstrap() {
   const options = new DocumentBuilder()
     .setTitle('Silo Digital Wallet API')
     .setDescription('Your API Description')
+    .setContact('Philip Oyelegbin', '', 'info@philipoyelegbin.com.ng')
+    .setExternalDoc('Redoc Documenation', '/docs')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
