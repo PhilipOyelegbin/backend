@@ -23,15 +23,16 @@ async function bootstrap() {
   app.setGlobalPrefix('/api/v1');
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
-  // setting up swagger ui documentation
+  // setting up swagger ui and redoc documentation
   const options = new DocumentBuilder()
     .setTitle('Silo Digital Wallet API')
     .setDescription('Your API Description')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('docs', app, document, {
+  SwaggerModule.setup('/', app, document, {
     customfavIcon: 'https://avatars.githubusercontent.com/u/6936373?s=200&v=4',
     customJs: [
       'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.min.js',
@@ -44,6 +45,12 @@ async function bootstrap() {
     ],
   });
 
+  // Expose Swagger JSON at `/api-json`
+  app.use('/api-json', (req: any, res: any) => {
+    res.json(document);
+  });
+
+  // Set up ReDoc at `/docs`
   setupRedoc(app as any);
 
   await app.listen(process.env.PORT ?? 3000);

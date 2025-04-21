@@ -6,6 +6,7 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { GetUser } from '../auth/decorator/get-user.decorator';
@@ -19,8 +20,10 @@ import {
   ApiOkResponse,
   ApiOperation,
 } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
 @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
 @Controller('user')
 export class UserController {

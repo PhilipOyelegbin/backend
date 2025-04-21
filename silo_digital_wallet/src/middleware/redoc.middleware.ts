@@ -5,8 +5,8 @@ export function setupRedoc(app: Express) {
   const redocOptions = {
     title: 'Silo Digital Wallet API',
     version: '1.0',
-    specUrl: '/docs-json',
+    specUrl: '/api-json',
   };
 
-  app.use('/', redoc(redocOptions));
+  app.use('/docs', redoc(redocOptions));
 }

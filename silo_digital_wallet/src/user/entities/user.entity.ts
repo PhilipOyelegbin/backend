@@ -23,6 +23,9 @@ export class User {
   password: string;
 
   @Column({ default: false })
+  remember_me: boolean;
+
+  @Column({ default: false })
   isAdmin: boolean;
 
   @Column({ default: false })

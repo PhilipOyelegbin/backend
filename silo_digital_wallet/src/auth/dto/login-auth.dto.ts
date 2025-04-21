@@ -5,6 +5,7 @@ import {
   MinLength,
   Matches,
   IsOptional,
+  IsBoolean,
 } from 'class-validator';
 
 export class LoginAuthDto {
@@ -42,6 +43,6 @@ export class LoginAuthDto {
     type: Boolean,
   })
   @IsOptional()
-  @IsString()
-  rememberMe?: boolean;
+  @IsBoolean()
+  remember_me?: boolean;
 }
