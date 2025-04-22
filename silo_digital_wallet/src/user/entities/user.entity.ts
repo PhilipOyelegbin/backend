@@ -38,6 +38,18 @@ export class User {
   verification_token_expiration: string;
 
   @Column({ nullable: true })
+  reset_token: string;
+
+  @Column({ nullable: true })
+  reset_token_expiration: string;
+
+  @Column({ nullable: true })
+  security_question: string;
+
+  @Column({ nullable: true })
+  security_answer: string;
+
+  @Column({ nullable: true })
   blacklisted_token: string;
 
   @OneToMany(() => Wallet, (wallet) => wallet.user)

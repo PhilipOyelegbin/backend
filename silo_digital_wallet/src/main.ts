@@ -26,7 +26,9 @@ async function bootstrap() {
   // setting up swagger ui and redoc documentation
   const options = new DocumentBuilder()
     .setTitle('Silo Digital Wallet API')
-    .setDescription('Your API Description')
+    .setDescription(
+      'Silo Digital Wallet app is a seamless and secure platform designed to revolutionize the way you manage and interact with your finances. Built with cutting-edge technology, the app addresses the need for convenient, fast, and reliable international transactions while solving key financial accessibility and security challenges. The app eliminates the dependency on cash, reduces the risk of theft or fraud, and provides financial services to underbanked or unbanked individuals. It simplifies complex financial processes like forex rates, conversion, and multi-currency transactions, all while ensuring top-notch security and usability. With its intuitive design, users save time and effort, enabling them to focus on what matters most—living their best lives.',
+    )
     .setContact('Philip Oyelegbin', '', 'info@philipoyelegbin.com.ng')
     .setExternalDoc('Redoc Documenation', '/docs')
     .setVersion('1.0')

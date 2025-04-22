@@ -69,7 +69,7 @@ export class UserController {
 
   @ApiOperation({
     summary: 'Delete user account',
-    description: 'Deletes the current user account from the database.',
+    description: 'Delete the current user account from the database.',
   })
   @ApiNoContentResponse({ description: 'No content' })
   @ApiNotFoundResponse({ description: 'Not found' })
